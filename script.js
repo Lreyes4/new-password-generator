@@ -8,7 +8,8 @@ var uppercaseLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', '
 var specialCharacters = ["!", "@", "#", "$", "%", "&"]
 var chosenCharacters = []
 
-function init() {
+function generatePassword() {
+  //prompt user with questions to figure out what kind of password they want
   var passwordlength = prompt("How long would you like your password to be?")
   console.log(passwordlength);
 
@@ -20,11 +21,38 @@ function init() {
 
   var hasSpecialChars = confirm("Do you want to include special characters in your password?")
 
+  //build-up possible password characters into the chosen characters array
   if (hasLowerCase){
     chosenCharacters=chosenCharacters.concat(lowercaseLetters)
-    console.log(chosenCharacters)}}
+    console.log(chosenCharacters)
+  }
 
+  if (hasUpperCase){
+    chosenCharacters=chosenCharacters.concat(uppercaseLetters)
+    console.log(chosenCharacters)
+  }
 
+  if (hasNumber){
+    chosenCharacters=chosenCharacters.concat(numbers)
+    console.log(chosenCharacters)
+  }
+
+  if (hasSpecialChars){
+    chosenCharacters=chosenCharacters.concat(specialCharacters)
+    console.log(chosenCharacters)
+  }
+  //Loop through for every character the user wants in their password
+  var finalPassword="";
+  for(var i = 0; i < passwordlength; i++){
+    //Get random number and use it to get a random character from the array
+    var randomNumber=Math.floor(Math.random()* chosenCharacters.length)
+    var randomChar=chosenCharacters[randomNumber]
+    console.log(randomNumber, randomChar);
+    //Build-up password string
+    finalPassword=finalPassword.concat(randomChar)
+  }
+  return finalPassword
+}
 
 // Write password to the #password input
 function writePassword() {
@@ -35,4 +63,3 @@ function writePassword() {
 }
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-init()
